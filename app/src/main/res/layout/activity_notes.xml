@@ -4,30 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="15dp"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".NotesActivity">
 
+
+    <EditText
+        android:id="@+id/edNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnUsuarios"
+            android:id="@+id/btnNuevo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="USUARIOS" />
+            android:text="NUEVO" />
 
         <Button
-            android:id="@+id/btnArchivos"
+            android:id="@+id/btnGuardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ARCHIVOS" />
+            android:text="GUARDAR" />
 
         <Button
-            android:id="@+id/btnSalir"
+            android:id="@+id/btnAbrir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SALIR" />
-
+            android:text="ABRIR" />
+    </LinearLayout>
 </LinearLayout>
