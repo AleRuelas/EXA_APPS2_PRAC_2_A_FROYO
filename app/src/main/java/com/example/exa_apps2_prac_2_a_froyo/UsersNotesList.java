@@ -43,6 +43,7 @@ public class UsersNotesList extends AppCompatActivity implements ListView.OnItem
 
         setResult(Activity.RESULT_OK, inDatos);
 
+
         Toast.makeText(this, notes[position].getNote(), Toast.LENGTH_SHORT).show();
     }
 }
