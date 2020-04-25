@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".UsersList">
+    tools:context=".UsersNotesList">
 
     <TextView
         android:id="@+id/textView"
@@ -17,7 +17,7 @@
         android:textSize="18sp" />
 
     <ListView
-        android:id="@+id/loginUsersList"
+        android:id="@+id/notesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
