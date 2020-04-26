@@ -43,6 +43,7 @@ public class UsersActivity extends AppCompatActivity {
             String SQL = "select * from Usuarios";
             Cursor cursor = db.rawQuery(SQL, null);
             String list = "";
+
             while (cursor.moveToNext()) {
                 list += cursor.getInt(0) + "    " + cursor.getString(1) + "    " + cursor.getString(2) + "    " + cursor.getString(3) +"    " + cursor.getString(4) + "\n";
             }
