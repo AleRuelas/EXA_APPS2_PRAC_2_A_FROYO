@@ -19,6 +19,5 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getin(View view){
         startActivity(inNotes);
-
     }
 }

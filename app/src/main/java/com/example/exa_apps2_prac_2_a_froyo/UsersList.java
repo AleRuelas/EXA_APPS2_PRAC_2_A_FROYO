@@ -19,7 +19,6 @@ public class UsersList extends AppCompatActivity implements ListView.OnItemClick
             new UserClass("Ramirez","Francisco","fran87","12345"),
             new UserClass("Lopez","Andres","andres2","12345"),
             new UserClass("Dominguez","Lola","Lola2","12345"),
-
     };
 
     @Override

@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Apellido:"
@@ -80,14 +80,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="NUEVO" />
+            android:text="NUEVO"
+            android:onClick="add"/>
 
         <Button
             android:id="@+id/btnGuardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="GUARDAR" />
+            android:text="GUARDAR"
+            android:onClick="update"/>
 
         <Button
             android:id="@+id/btnAbrir"
@@ -101,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="BORRAR" />
+            android:text="BORRAR"
+            android:onClick="delete"/>
     </LinearLayout>
 </LinearLayout>
