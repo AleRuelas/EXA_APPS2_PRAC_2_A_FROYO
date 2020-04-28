@@ -1,14 +1,21 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
+
 public class UserClass {
     private String apellido, nombre, usuario, password;
+    private int id;
 
-    public UserClass(String apellido, String nombre, String usuario, String password) {
+    public UserClass(int id, String apellido, String nombre, String usuario, String password) {
+        this.id = id;
         this.apellido = apellido;
         this.nombre = nombre;
         this.usuario = usuario;
         this.password = password;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getApellido() {
         return apellido;
@@ -41,4 +48,9 @@ public class UserClass {
     public void setPassword(String password) {
         this.password = password;
     }
+
+   /* @Override
+    public String toString(){
+        return nombre;
+    }*/
 }

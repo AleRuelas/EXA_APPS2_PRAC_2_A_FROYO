@@ -7,23 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class UsersList extends AppCompatActivity implements ListView.OnItemClickListener {
-    ArrayList<String> list;
-    ArrayAdapter adapter;
+    ArrayList<UserClass> list;
     ListView usersList;
-    /*UserClass[] users = {
-            new UserClass("Ruelas","Alejandra","ale03","12345"),
-            new UserClass("Vazquez","Cinthia","cinthia15","12345"),
-            new UserClass("Ramirez","Francisco","fran87","12345"),
-            new UserClass("Lopez","Andres","andres2","12345"),
-            new UserClass("Dominguez","Lola","Lola2","12345"),
-    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,23 +21,23 @@ public class UsersList extends AppCompatActivity implements ListView.OnItemClick
         setContentView(R.layout.activity_users_list);
 
         usersList = findViewById(R.id.usersList);
-        /*usersList.setAdapter(new UserAdapter(this, R.layout.layout_user,users));*/
         usersList.setOnItemClickListener(this);
         DB db = new DB(getApplicationContext(),null,null,1);
         list = db.selectList();
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,list);
+        UserAdapter adapter  = new UserAdapter(this,list);
         usersList.setAdapter(adapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        /*Intent inDatos = new Intent();
-        inDatos.putExtra("usuario",users[position].getUsuario());
-        inDatos.putExtra("apellido",users[position].getApellido());
-        inDatos.putExtra("nombre",users[position].getNombre());
-
+        Intent inDatos;
+        inDatos = new Intent(getApplicationContext(), UsersActivity.class);
+        inDatos.putExtra("apellido",list.get(position).getApellido());
+        inDatos.putExtra("nombre",list.get(position).getNombre());
+        inDatos.putExtra("usuario",list.get(position).getUsuario());
+        inDatos.putExtra("password",list.get(position).getPassword());
+        inDatos.putExtra("call",true);
         setResult(Activity.RESULT_OK, inDatos);
-
-        Toast.makeText(this, users[position].getUsuario(), Toast.LENGTH_SHORT).show();*/
+        finish();
     }
 }
