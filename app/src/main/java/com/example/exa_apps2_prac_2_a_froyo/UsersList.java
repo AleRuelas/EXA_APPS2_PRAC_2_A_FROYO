@@ -38,6 +38,7 @@ public class UsersList extends AppCompatActivity implements ListView.OnItemClick
 
         SharedPreferences preferences = this.getSharedPreferences("usuarios", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("id", list.get(position).getId());
         editor.putString("apellido", list.get(position).getApellido());
         editor.putString("nombre", list.get(position).getNombre());
         editor.putString("usuario", list.get(position).getUsuario());

@@ -34,7 +34,7 @@ public class DB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    public String addRegister(String ap, String nom, String user, String pass) {
+    public String addRegister(boolean v, String ap, String nom, String user, String pass) {
         String message = "";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues row = new ContentValues();
@@ -44,9 +44,13 @@ public class DB extends SQLiteOpenHelper {
         row.put("password", pass);
         db.beginTransaction();
         try {
-            db.setTransactionSuccessful();
-            db.insertOrThrow("Usuarios", null, row);
-            message = "¡El registro fue añadido con éxito!";
+            if (v) {
+                message = "El usuario " + user + " ya existe.";
+            } else {
+                db.setTransactionSuccessful();
+                db.insert("Usuarios", null, row);
+                message = "¡El registro fue añadido con éxito!";
+            }
         } catch (SQLException e) {
             message = "No se ha podido ingresar el registro.";
         } finally {
@@ -56,18 +60,23 @@ public class DB extends SQLiteOpenHelper {
         return message;
     }
 
-    public String updateRegister(String ap, String nom, String user, String pass) {
+    public String updateRegister(boolean v, int id, String ap, String nom, String user, String pass) {
         String message = "";
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
             db.setTransactionSuccessful();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("apellido", ap);
-            contentValues.put("nombre", nom);
-            contentValues.put("password", pass);
-            db.update("Usuarios", contentValues, "usuario='" + user + "'", null);
-            message = "¡El registro fue modificado con éxito!";
+            if (v) {
+                message = "El usuario " + user + " ya existe.";
+            } else {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("apellido", ap);
+                contentValues.put("nombre", nom);
+                contentValues.put("usuario", user);
+                contentValues.put("password", pass);
+                db.update("Usuarios", contentValues, "id='" + id + "'", null);
+                message = "¡El registro fue modificado con éxito!";
+            }
         } catch (SQLException e) {
             message = "No se ha podido actualizar el registro.";
         } finally {
@@ -77,13 +86,13 @@ public class DB extends SQLiteOpenHelper {
         return message;
     }
 
-    public String deleteRegister(String ap, String nom, String user, String pass) {
+    public String deleteRegister(int id) {
         String message = "";
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
             db.setTransactionSuccessful();
-            db.delete("Usuarios", "apellido='" + ap + "' and nombre='" + nom + "'and usuario='" + user + "' and password=" + pass, null);
+            db.delete("Usuarios", "id=" + id, null);
             message = "¡El registro fue eliminado con éxito!";
         } catch (SQLException e) {
             message = "No se ha podido eliminar el registro.";
@@ -93,21 +102,45 @@ public class DB extends SQLiteOpenHelper {
         db.close();
         return message;
     }
-    public int findUser(String user, String password){
+
+    public boolean searchUser(String user) {
+        boolean v = false;
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
             db.setTransactionSuccessful();
+            Cursor c = db.rawQuery("SELECT * FROM Usuarios WHERE usuario=" + user + "", null);
+            if (c != null) {
+                if (c.moveToFirst()) {
+                    v = true;
+                    return v;
+                } else {
+                    v = false;
+                    return v;
+                }
+            }
+        } catch (SQLException e) {
+            return v;
+        } finally {
+            db.endTransaction();
+        }
+        return v;
+    }
 
-            Cursor c=db.rawQuery("SELECT * FROM Usuarios WHERE usuario='"+user+"' AND password='"+password+"'", null);
-            if (c!=null) {
+    public int findUser(String user, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.setTransactionSuccessful();
+            Cursor c = db.rawQuery("SELECT * FROM Usuarios WHERE usuario='" + user + "' AND password='" + password + "'", null);
+            if (c != null) {
                 if (c.moveToFirst()) {
 
                     do {
                         return c.getInt(0);
                     } while (c.moveToNext());
-                }else {
-                    Log.wtf("error", "no hay registro");
+                } else {
+                    Log.wtf("error", "No hay registro.");
                     return 0;
                 }
             }
@@ -127,14 +160,13 @@ public class DB extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(SQL, null);
         if (cursor.moveToFirst()) {
             do {
-                list.add(new UserClass(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4)));
+                list.add(new UserClass(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             } while (cursor.moveToNext());
         }
         return list;
     }
-    public void addNote(int id, String name){
 
-        String message = "";
+    public void addNote(int id, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("create table if not exists Archivos(" +
                 "id integer PRIMARY KEY autoincrement, " +
@@ -155,22 +187,22 @@ public class DB extends SQLiteOpenHelper {
         }
         db.close();
     }
-    public ArrayList<NotesClass> getNotes(int id){
+
+    public ArrayList<NotesClass> getNotes(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         ArrayList<NotesClass> notes = new ArrayList<NotesClass>();
         try {
             db.setTransactionSuccessful();
-
-            Cursor c=db.rawQuery("SELECT * FROM Archivos WHERE id_usuario="+id+"", null);
-            if (c!=null) {
+            Cursor c = db.rawQuery("SELECT * FROM Archivos WHERE id_usuario=" + id + "", null);
+            if (c != null) {
                 if (c.moveToFirst()) {
 
                     do {
                         notes.add(new NotesClass(c.getString(c.getColumnIndex("nombre"))));
                     } while (c.moveToNext());
                     return notes;
-                }else{
+                } else {
                     return null;
                 }
             }
