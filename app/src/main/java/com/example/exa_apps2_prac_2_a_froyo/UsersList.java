@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,13 +31,11 @@ public class UsersList extends AppCompatActivity implements ListView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent inDatos;
-        inDatos = new Intent(getApplicationContext(), UsersActivity.class);
+        Intent inDatos = new Intent(this, UsersActivity.class);
         inDatos.putExtra("apellido",list.get(position).getApellido());
         inDatos.putExtra("nombre",list.get(position).getNombre());
         inDatos.putExtra("usuario",list.get(position).getUsuario());
         inDatos.putExtra("password",list.get(position).getPassword());
-        inDatos.putExtra("call",true);
         setResult(Activity.RESULT_OK, inDatos);
         finish();
     }

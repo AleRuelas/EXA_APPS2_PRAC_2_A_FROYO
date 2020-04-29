@@ -9,13 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 public class UsersActivity extends AppCompatActivity {
 
     EditText apellido, nombre, usuario, password;
     Intent inList;
-    ArrayList<UserClass> list = new ArrayList();
+    Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,19 +24,27 @@ public class UsersActivity extends AppCompatActivity {
         nombre = findViewById(R.id.edNombre);
         usuario = findViewById(R.id.edUsuario);
         password = findViewById(R.id.edPass);
-        inList = new Intent(getApplicationContext(), UsersList.class);
+        inList = new Intent(UsersActivity.this, UsersList.class);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
-            if (requestCode == Activity.RESULT_OK) {
-                Bundle extras = getIntent().getExtras();
-                apellido.setText(extras.getString("apellido"));
-                nombre.setText(extras.getString("nombre"));
-                usuario.setText(extras.getString("usuario"));
-                password.setText(extras.getString("password"));
+            if (resultCode == Activity.RESULT_OK) {
+                extras = getIntent().getExtras();
+                if(extras != null){
+                    String ap = extras.getString("apellido");
+                    String nom =extras.getString("nombre");
+                    String user=extras.getString("usuario");
+                    String pass=extras.getString("password");
+                    apellido.setText(ap);
+                    nombre.setText(nom);
+                    usuario.setText(user);
+                    password.setText(pass);
+                }else{
+                    Toast.makeText(this, "Información solicitada no disponible.", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
