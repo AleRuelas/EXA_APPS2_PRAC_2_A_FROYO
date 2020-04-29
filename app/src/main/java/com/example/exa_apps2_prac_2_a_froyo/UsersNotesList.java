@@ -25,11 +25,20 @@ public class UsersNotesList extends AppCompatActivity implements ListView.OnItem
         setContentView(R.layout.activity_users_notes_list);
         notesList = findViewById(R.id.notesList);
         DB db = new DB(getApplicationContext(), null, null, 1);
-        list = db.getNotes(getIntent().getIntExtra("id_nombre", 0));
+        if (getIntent().getIntExtra("id_nombre", 0)!=0) {
+            list = db.getNotes(getIntent().getIntExtra("id_nombre", 0));
+            if (list!=null) {
+                notesList.setAdapter(new NotesAdapter(this, R.layout.layout_note, list));
+                notesList.setOnItemClickListener(this);
+            }else {
+                Toast.makeText(this, "Este usuario no tiene archivos para mostrar aun", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }else{
+            Toast.makeText(this, "no hay archivos para este usuario", Toast.LENGTH_SHORT).show();
+            finish();
 
-        notesList.setAdapter(new NotesAdapter(this, R.layout.layout_note,list));
-        notesList.setOnItemClickListener(this);
-
+        }
     }
 
 

@@ -164,11 +164,15 @@ public class DB extends SQLiteOpenHelper {
 
             Cursor c=db.rawQuery("SELECT * FROM Archivos WHERE id_usuario="+id+"", null);
             if (c!=null) {
-                c.moveToFirst();
-                do{
-                    notes.add(new NotesClass(c.getString(c.getColumnIndex("nombre"))));
-                }while(c.moveToNext());
-                return notes;
+                if (c.moveToFirst()) {
+
+                    do {
+                        notes.add(new NotesClass(c.getString(c.getColumnIndex("nombre"))));
+                    } while (c.moveToNext());
+                    return notes;
+                }else{
+                    return null;
+                }
             }
         } catch (SQLException e) {
             return null;
