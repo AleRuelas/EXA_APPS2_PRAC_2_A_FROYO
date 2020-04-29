@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
+//ADAPTADOR PARA LA LISTA DE ARCHIVOS
 public class NotesAdapter extends ArrayAdapter<NotesClass> {
 
     Context context;

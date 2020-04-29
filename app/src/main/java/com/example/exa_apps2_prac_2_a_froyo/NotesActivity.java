@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class NotesActivity extends AppCompatActivity {
+    //DECLARACION DE VARIABLES
     EditText edit;
     Intent inListnotes;
     int id=0;
@@ -37,24 +38,27 @@ public class NotesActivity extends AppCompatActivity {
 
         edit = findViewById(R.id.edNotes);
         inListnotes = new Intent(this, UsersNotesList.class);
+        //MANEJO DE PERMISOS PARA ANDROID 10 EN ADELANTE
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
+        //RECUPERACION DE VALOR DEL ID DEL USUARIO LOGEADO
         id=getIntent().getIntExtra("id", 0);
     }
-
+    //FUNCION SOBRESCRITA PARA ESPERAR RESULTADO DE LA LISTA
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
             if (resultCode == Activity.RESULT_OK) {
+                //UTILIZACION DE SHAREDREFERENCE PARA RECUPERAR DATOS
                 SharedPreferences preferences = this.getSharedPreferences("nombreArchivo", Context.MODE_PRIVATE);
                 nombreArchivo = preferences.getString("nombre", "error");
                 preferences.edit().clear().commit();
 
                 if(!nombreArchivo.equals("")){
                     try {
-
+                        //CODIGO PARA LEER EL CONTENIDO DE UN ARCHIVO TXT SELECCIONADO Y COLOCARLO EN EL EDITTEXT
                         File file = new File(getExternalFilesDir(null).getPath(), nombreArchivo);
                         FileInputStream in = new FileInputStream(file);
                         InputStreamReader ist = new InputStreamReader(in);
@@ -76,21 +80,23 @@ public class NotesActivity extends AppCompatActivity {
             }
         }
     }
-
+    //FUNCION PARA ABRIR LA ACTIVIDAD QUE TIENE LA LISTA DE LOS USUARIOS
     public void openListn(View view){
         edit.setText("");
         inListnotes.putExtra("id_nombre", id);
         startActivityForResult(inListnotes, 1000);
     }
 
-
+    //FUNCION CREAR ARCHIVO NUEVO
     public void createNote(View view) {
         String texto = edit.getText().toString();
+        //DAR NOMBRES RANDOM A LOS ARCHIVOS
         int numberRandom=(int)(Math.random()*100);
         String nameNote = "archivo"+numberRandom+".txt";
         DB db = new DB(getApplicationContext(), null, null, 1);
         if (!texto.equals("")) {
             try {
+                //CODIGO PARA ESCRIBIR EN UN ARCHIVO
                 File file = new File(getExternalFilesDir(null).getPath(), nameNote);
                 FileOutputStream on = new FileOutputStream(file);
                 OutputStreamWriter osw = new OutputStreamWriter(on);
@@ -111,7 +117,7 @@ public class NotesActivity extends AppCompatActivity {
         }
         edit.setText("");
     }
-
+    //FUNCION PARA MODIFICAR EL CONTENIDO DE UN ARCHIVO
     public void saveNote(View view) {
         String texto = edit.getText().toString();
         DB db = new DB(getApplicationContext(), null, null, 1);

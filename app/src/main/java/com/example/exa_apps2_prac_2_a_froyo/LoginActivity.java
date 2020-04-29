@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.edPassword);
         inNotes = new Intent(this, NotesActivity.class);
     }
-
+    //FUNCION PARA ACCEDER A LA INFORMACION DE LOS ARCHIVOS DE UN USUARIO
     public void getin(View view){
         DB data = new DB(getApplicationContext(), null, null, 1);
         if (!user.getText().toString().equals("")&& !pass.getText().toString().equals("")) {

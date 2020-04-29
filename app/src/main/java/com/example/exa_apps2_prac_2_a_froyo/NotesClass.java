@@ -1,5 +1,5 @@
 package com.example.exa_apps2_prac_2_a_froyo;
-
+//CLASE PARA ARCHIVOS
 public class NotesClass {
     private String note;
 
