@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,10 @@ public class DB extends SQLiteOpenHelper {
                 "nombre text, " +
                 "usuario text, " +
                 "password text);");
+        db.execSQL("create table if not exists Archivos(" +
+                "id integer PRIMARY KEY autoincrement, " +
+                "nombre text," +
+                "id_usuario integer);");
     }
 
     @Override
@@ -87,6 +93,26 @@ public class DB extends SQLiteOpenHelper {
         db.close();
         return message;
     }
+    public int findUser(String user, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.setTransactionSuccessful();
+
+            Cursor c=db.rawQuery("SELECT * FROM Usuarios WHERE usuario='"+user+"' AND password='"+password+"'", null);
+            if (c!=null) {
+                c.moveToFirst();
+                do{
+                    return c.getInt(0);
+                }while(c.moveToNext());
+            }
+        } catch (SQLException e) {
+            return 0;
+        } finally {
+            db.endTransaction();
+        }
+        return 0;
+    }
 
     public ArrayList<UserClass> selectList() {
         UserClass user;
@@ -100,6 +126,51 @@ public class DB extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return list;
+    }
+    public void addNote(int id, String name){
+
+        String message = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("create table if not exists Archivos(" +
+                "id integer PRIMARY KEY autoincrement, " +
+                "nombre text," +
+                "id_usuario integer);");
+        ContentValues row = new ContentValues();
+        row.put("nombre", name);
+        row.put("id_usuario", id);
+        db.beginTransaction();
+        try {
+            db.setTransactionSuccessful();
+            db.insertOrThrow("Archivos", null, row);
+            Log.wtf("xd", "¡El registro fue añadido con éxito!");
+        } catch (SQLException e) {
+            Log.wtf("xd", "¡No se pudo agregar con exito!");
+        } finally {
+            db.endTransaction();
+        }
+        db.close();
+    }
+    public String getNotes(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        String notes="";
+        try {
+            db.setTransactionSuccessful();
+
+            Cursor c=db.rawQuery("SELECT * FROM Archivos WHERE id_usuario="+id+"", null);
+            if (c!=null) {
+                c.moveToFirst();
+                do{
+                    notes+=c.getString(c.getColumnIndex("nombre"));
+                }while(c.moveToNext());
+                return notes;
+            }
+        } catch (SQLException e) {
+            return "";
+        } finally {
+            db.endTransaction();
+        }
+        return notes;
     }
 }
 
