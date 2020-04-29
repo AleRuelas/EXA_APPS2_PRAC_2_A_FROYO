@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public class LoginActivity extends AppCompatActivity {
-
+    //login xd
     Intent inNotes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
