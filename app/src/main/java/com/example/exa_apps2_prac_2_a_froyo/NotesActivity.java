@@ -78,6 +78,7 @@ public class NotesActivity extends AppCompatActivity {
     }
 
     public void openListn(View view){
+        edit.setText("");
         inListnotes.putExtra("id_nombre", id);
         startActivityForResult(inListnotes, 1000);
     }
