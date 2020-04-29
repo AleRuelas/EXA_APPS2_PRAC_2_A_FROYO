@@ -1,7 +1,9 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,10 +35,15 @@ public class UsersList extends AppCompatActivity implements ListView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent inDatos = new Intent(this, UsersActivity.class);
-        inDatos.putExtra("apellido",list.get(position).getApellido());
-        inDatos.putExtra("nombre",list.get(position).getNombre());
-        inDatos.putExtra("usuario",list.get(position).getUsuario());
-        inDatos.putExtra("password",list.get(position).getPassword());
+
+        SharedPreferences preferences = this.getSharedPreferences("usuarios", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("apellido", list.get(position).getApellido());
+        editor.putString("nombre", list.get(position).getNombre());
+        editor.putString("usuario", list.get(position).getUsuario());
+        editor.putString("password", list.get(position).getPassword());
+        editor.commit();
+
         setResult(Activity.RESULT_OK, inDatos);
         finish();
     }

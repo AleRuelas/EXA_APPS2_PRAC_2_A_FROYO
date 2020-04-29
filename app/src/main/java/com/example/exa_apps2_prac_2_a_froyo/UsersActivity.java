@@ -3,7 +3,9 @@ package com.example.exa_apps2_prac_2_a_froyo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -32,19 +34,13 @@ public class UsersActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
             if (resultCode == Activity.RESULT_OK) {
-                extras = getIntent().getExtras();
-                if(extras != null){
-                    String ap = extras.getString("apellido");
-                    String nom =extras.getString("nombre");
-                    String user=extras.getString("usuario");
-                    String pass=extras.getString("password");
-                    apellido.setText(ap);
-                    nombre.setText(nom);
-                    usuario.setText(user);
-                    password.setText(pass);
-                }else{
-                    Toast.makeText(this, "Información solicitada no disponible.", Toast.LENGTH_SHORT).show();
-                }
+
+                SharedPreferences preferences = this.getSharedPreferences("usuarios", Context.MODE_PRIVATE);
+                apellido.setText(preferences.getString("apellido", "error"));
+                nombre.setText(preferences.getString("nombre", "error"));
+                usuario.setText(preferences.getString("usuario", "error"));
+                password.setText(preferences.getString("password", "error"));
+                preferences.edit().clear().commit();
             }
         }
     }

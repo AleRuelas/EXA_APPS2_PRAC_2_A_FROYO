@@ -52,7 +52,6 @@ public class NotesActivity extends AppCompatActivity {
                 nombreArchivo = preferences.getString("nombre", "error");
                 preferences.edit().clear().commit();
 
-                //Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
                 if(!nombreArchivo.equals("")){
                     try {
 
