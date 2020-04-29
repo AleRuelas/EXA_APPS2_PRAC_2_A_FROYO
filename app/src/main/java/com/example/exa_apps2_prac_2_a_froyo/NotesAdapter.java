@@ -8,14 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class NotesAdapter extends ArrayAdapter<NotesClass> {
 
     Context context;
     int resource;
-    NotesClass[] notes;
+    ArrayList<NotesClass> notes;
 
 
-    public NotesAdapter( Context context, int resource,  NotesClass[] objects) {
+    public NotesAdapter( Context context, int resource,  ArrayList<NotesClass> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -32,7 +34,7 @@ public class NotesAdapter extends ArrayAdapter<NotesClass> {
         }
         txtNote = convertView.findViewById(R.id.txtNote);
 
-        txtNote.setText(notes[position].getNote());
+        txtNote.setText(notes.get(position).getNote());
 
 
         return convertView;

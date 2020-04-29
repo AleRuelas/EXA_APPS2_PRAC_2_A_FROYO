@@ -27,6 +27,7 @@ public class UsersList extends AppCompatActivity implements ListView.OnItemClick
         list = db.selectList();
         UserAdapter adapter  = new UserAdapter(this,list);
         usersList.setAdapter(adapter);
+
     }
 
     @Override

@@ -150,10 +150,10 @@ public class DB extends SQLiteOpenHelper {
         }
         db.close();
     }
-    public String getNotes(int id){
+    public ArrayList<NotesClass> getNotes(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
-        String notes="";
+        ArrayList<NotesClass> notes = new ArrayList<NotesClass>();
         try {
             db.setTransactionSuccessful();
 
@@ -161,12 +161,12 @@ public class DB extends SQLiteOpenHelper {
             if (c!=null) {
                 c.moveToFirst();
                 do{
-                    notes+=c.getString(c.getColumnIndex("nombre"));
+                    notes.add(new NotesClass(c.getString(c.getColumnIndex("nombre"))));
                 }while(c.moveToNext());
                 return notes;
             }
         } catch (SQLException e) {
-            return "";
+            return null;
         } finally {
             db.endTransaction();
         }
