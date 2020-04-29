@@ -28,6 +28,10 @@ public class LoginActivity extends AppCompatActivity {
             if ( id != 0) {
                 inNotes.putExtra("id", id);
                 startActivity(inNotes);
+            }else {
+                user.setText("");
+                pass.setText("");
+                Toast.makeText(this, "No existe el usuario", Toast.LENGTH_SHORT).show();
             }
         }else{
             Toast.makeText(this, "Debes llenar todos los campos", Toast.LENGTH_SHORT).show();

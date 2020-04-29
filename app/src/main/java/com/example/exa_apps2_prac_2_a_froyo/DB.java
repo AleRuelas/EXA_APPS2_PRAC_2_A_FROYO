@@ -101,10 +101,15 @@ public class DB extends SQLiteOpenHelper {
 
             Cursor c=db.rawQuery("SELECT * FROM Usuarios WHERE usuario='"+user+"' AND password='"+password+"'", null);
             if (c!=null) {
-                c.moveToFirst();
-                do{
-                    return c.getInt(0);
-                }while(c.moveToNext());
+                if (c.moveToFirst()) {
+
+                    do {
+                        return c.getInt(0);
+                    } while (c.moveToNext());
+                }else {
+                    Log.wtf("error", "no hay registro");
+                    return 0;
+                }
             }
         } catch (SQLException e) {
             return 0;
