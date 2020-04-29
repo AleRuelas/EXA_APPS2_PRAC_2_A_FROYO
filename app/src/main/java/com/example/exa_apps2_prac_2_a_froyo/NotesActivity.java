@@ -29,7 +29,7 @@ public class NotesActivity extends AppCompatActivity {
     EditText edit;
     Intent inListnotes;
     int id=0;
-
+    String nombreArchivo="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +49,14 @@ public class NotesActivity extends AppCompatActivity {
         if (requestCode == 1000) {
             if (resultCode == Activity.RESULT_OK) {
                 SharedPreferences preferences = this.getSharedPreferences("nombreArchivo", Context.MODE_PRIVATE);
-                String nombre = preferences.getString("nombre", "error");
+                nombreArchivo = preferences.getString("nombre", "error");
                 preferences.edit().clear().commit();
 
                 //Toast.makeText(this, nombre, Toast.LENGTH_SHORT).show();
-                if(!nombre.isEmpty()){
+                if(!nombreArchivo.equals("")){
                     try {
 
-                        File file = new File(getExternalFilesDir(null).getPath(), nombre);
+                        File file = new File(getExternalFilesDir(null).getPath(), nombreArchivo);
                         FileInputStream in = new FileInputStream(file);
                         InputStreamReader ist = new InputStreamReader(in);
                         BufferedReader buffer = new BufferedReader(ist);
@@ -113,5 +113,30 @@ public class NotesActivity extends AppCompatActivity {
     }
 
     public void saveNote(View view) {
+        String texto = edit.getText().toString();
+        DB db = new DB(getApplicationContext(), null, null, 1);
+        if (!texto.equals("")) {
+            if (!nombreArchivo.equals("")) {
+                try {
+                    File file = new File(getExternalFilesDir(null).getPath(), nombreArchivo);
+                    FileOutputStream on = new FileOutputStream(file);
+                    OutputStreamWriter osw = new OutputStreamWriter(on);
+                    BufferedWriter buffer = new BufferedWriter(osw);
+
+                    buffer.write(texto);
+                    buffer.close();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                Toast.makeText(this, "No ha seleccionado ningun archivo", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, "Necesitas escribir algo en el archivo", Toast.LENGTH_SHORT).show();
+        }
+        edit.setText("");
     }
 }
