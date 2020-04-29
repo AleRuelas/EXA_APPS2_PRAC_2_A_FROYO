@@ -93,6 +93,7 @@ public class DB extends SQLiteOpenHelper {
         db.close();
         return message;
     }
+    //FUNCION QUE REGRESA EL ID DE UN USUARIO
     public int findUser(String user, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -132,6 +133,7 @@ public class DB extends SQLiteOpenHelper {
         }
         return list;
     }
+    //FUNCION PARA AÑADIR REGISTRO A LA TABLA ARCHIVOS
     public void addNote(int id, String name){
 
         String message = "";
@@ -155,6 +157,7 @@ public class DB extends SQLiteOpenHelper {
         }
         db.close();
     }
+    //FUNCION QUE REGRESA UN ARRAYLIST CON EL RESULTADO DE UN QUERY QUE TIENE LOS ARCHIVOS DE UN USUARIO
     public ArrayList<NotesClass> getNotes(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();

@@ -25,6 +25,7 @@ public class UsersNotesList extends AppCompatActivity implements ListView.OnItem
         setContentView(R.layout.activity_users_notes_list);
         notesList = findViewById(R.id.notesList);
         DB db = new DB(getApplicationContext(), null, null, 1);
+        //CODIGO PARA MANDAR LA INFORMACION CORRESPONDIENTE A LA LISTA
         if (getIntent().getIntExtra("id_nombre", 0)!=0) {
             list = db.getNotes(getIntent().getIntExtra("id_nombre", 0));
             if (list!=null) {
@@ -41,7 +42,7 @@ public class UsersNotesList extends AppCompatActivity implements ListView.OnItem
         }
     }
 
-
+    //METODO DE ONITEMCLICK PARA SELECCIONAR ELEMENTO DE LA LISTA Y MANDAR LA INFORMACION DE VUELTA
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent inDatos = new Intent();
