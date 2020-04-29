@@ -1,7 +1,9 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
 
-public class UserClass {
+import java.io.Serializable;
+
+public class UserClass implements Serializable {
     private String apellido, nombre, usuario, password;
     private int id;
 
