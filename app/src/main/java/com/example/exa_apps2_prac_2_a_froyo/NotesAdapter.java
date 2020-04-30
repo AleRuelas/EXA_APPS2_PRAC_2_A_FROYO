@@ -9,13 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 //ADAPTADOR PARA LA LISTA DE ARCHIVOS
 public class NotesAdapter extends ArrayAdapter<NotesClass> {
 
     Context context;
     int resource;
     ArrayList<NotesClass> notes;
-
 
     public NotesAdapter( Context context, int resource,  ArrayList<NotesClass> objects) {
         super(context, resource, objects);
@@ -27,16 +27,12 @@ public class NotesAdapter extends ArrayAdapter<NotesClass> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView txtNote;
-
         if (convertView == null){
             LayoutInflater layoutInflater = ((Activity)context).getLayoutInflater();
             convertView = layoutInflater.inflate(resource, parent, false);
         }
         txtNote = convertView.findViewById(R.id.txtNote);
-
         txtNote.setText(notes.get(position).getNote());
-
-
         return convertView;
     }
 }

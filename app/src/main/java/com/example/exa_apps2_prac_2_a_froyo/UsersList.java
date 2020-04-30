@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+//ACTIVIDAD DE LA LISTA DE USUARIOS
 public class UsersList extends AppCompatActivity implements ListView.OnItemClickListener {
     ArrayList<UserClass> list;
     ListView usersList;

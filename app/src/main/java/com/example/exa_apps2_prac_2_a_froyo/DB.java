@@ -7,10 +7,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//CLASE DE LA BASE DE DATOS
 public class DB extends SQLiteOpenHelper {
     public DB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, "Usuarios", factory, 1);

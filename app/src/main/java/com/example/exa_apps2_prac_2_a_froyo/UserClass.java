@@ -4,6 +4,7 @@ package com.example.exa_apps2_prac_2_a_froyo;
 import java.io.Serializable;
 
 public class UserClass implements Serializable {
+
     private String apellido, nombre, usuario, password;
     private int id;
 
@@ -50,9 +51,4 @@ public class UserClass implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-   /* @Override
-    public String toString(){
-        return nombre;
-    }*/
 }

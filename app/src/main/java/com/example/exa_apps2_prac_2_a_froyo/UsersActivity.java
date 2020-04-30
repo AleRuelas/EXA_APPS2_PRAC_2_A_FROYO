@@ -1,7 +1,5 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+//ACTIVIDAD DEL FORMULARIO DE GESTION DE USUARIOS
 public class UsersActivity extends AppCompatActivity {
 
     EditText apellido, nombre, usuario, password;
@@ -34,7 +35,8 @@ public class UsersActivity extends AppCompatActivity {
         //SE DESHABILITAN LOS BOTONES GUARDAR Y BORRAR
         btnBorrar.setEnabled(false);
         btnGuardar.setEnabled(false);
-        inList = new Intent(UsersActivity.this, UsersList.class); //INTENTO PARA PASAR A LA CLASE USERSLIST CUANDO SEA LLAMADO
+        //INTENTO PARA PASAR A LA CLASE USERSLIST CUANDO SEA LLAMADO
+        inList = new Intent(UsersActivity.this, UsersList.class);
     }
 
     //SE EJECUTA DESPUES DE VOLVER DE LA ACTIVIDAD USERSLIST LANZADA POR INTENTO INLIST

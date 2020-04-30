@@ -8,8 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 //ADAPTADOR PARA LA LISTA DE USUARIOS
 public class UserAdapter extends BaseAdapter {
+
     Context context;
     ArrayList<UserClass> list;
 

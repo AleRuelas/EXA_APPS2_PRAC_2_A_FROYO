@@ -1,11 +1,12 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+//ACTIVIDAD PRINCIPAL DE LOS BOTONES PARA VER USUARIOS, ARCHIVOS Y PARA SALIR
 public class MainActivity extends AppCompatActivity {
 
     Intent inUsers,inLogin;

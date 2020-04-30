@@ -1,15 +1,15 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+//ACTIVIDAD DE INICIO DE SESION DE UN USUARIO PARA CREAR Y MODIFICAR SUS ARCHIVOS
 public class LoginActivity extends AppCompatActivity {
-    //test francisco commit
     Intent inNotes;
     EditText user, pass;
     @Override
@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.edPassword);
         inNotes = new Intent(this, NotesActivity.class);
     }
-    //FUNCION PARA ACCEDER A LA INFORMACION DE LOS ARCHIVOS DE UN USUARIO
+    //FUNCION PARA ACCEDER A LA INFORMACIÓN DE LOS ARCHIVOS DE UN USUARIO
     public void getin(View view){
         DB data = new DB(getApplicationContext(), null, null, 1);
         if (!user.getText().toString().equals("")&& !pass.getText().toString().equals("")) {

@@ -1,7 +1,5 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +7,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
+//ACTIVIDAD DE LA LISTA DE ARCHIVOS DE CADA USUARIO
 public class UsersNotesList extends AppCompatActivity implements ListView.OnItemClickListener{
+
     ArrayList<NotesClass> list;
     ListView notesList;
 
@@ -36,7 +37,7 @@ public class UsersNotesList extends AppCompatActivity implements ListView.OnItem
                 finish();
             }
         }else{
-            Toast.makeText(this, "no hay archivos para este usuario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No hay archivos para este usuario", Toast.LENGTH_SHORT).show();
             finish();
 
         }
@@ -51,8 +52,6 @@ public class UsersNotesList extends AppCompatActivity implements ListView.OnItem
         editor.putString("nombre", list.get(position).getNote());
         editor.commit();
         setResult(Activity.RESULT_OK, inDatos);
-
-
         //Toast.makeText(this, list.get(position).getNote(), Toast.LENGTH_SHORT).show();
         finish();
     }
