@@ -6,7 +6,13 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-//ACTIVIDAD PRINCIPAL DE LOS BOTONES PARA VER USUARIOS, ARCHIVOS Y PARA SALIR
+/*ACTIVIDAD PRINCIPAL DE LOS BOTONES PARA VER USUARIOS, ARCHIVOS Y PARA SALIR
+
+    Integrantes:
+    Ramirez Luna Francisco Javier
+    Ruelas Najera Alejandra
+    Vazquez Lerma Cinthia Paola
+ */
 public class MainActivity extends AppCompatActivity {
 
     Intent inUsers,inLogin;
