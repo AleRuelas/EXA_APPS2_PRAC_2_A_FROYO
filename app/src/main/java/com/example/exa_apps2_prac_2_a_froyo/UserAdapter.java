@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
+//ADAPTADOR PARA LA LISTA DE USUARIOS
 public class UserAdapter extends BaseAdapter {
     Context context;
     ArrayList<UserClass> list;
@@ -39,18 +39,21 @@ public class UserAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.layout_user, null);
 
+        //SE VINCULA CADA TEXTVIEW CON EL COMPONENTE CORRESPONDIENTE DEL LAYOUT_USER
         txtApellido = itemView.findViewById(R.id.txtApellido);
         txtNombre = itemView.findViewById(R.id.txtNombre);
         txtUsuario = itemView.findViewById(R.id.txtUsuario);
 
+        //SE GUARDA LA INFORMACIÓN CORRESPONDIENTE A CADA VARIABLE SEGUN LA POSICIÓN EN LA LISTA
         String apellido = list.get(position).getApellido();
         String nombre = list.get(position).getNombre();
         String usuario = list.get(position).getUsuario();
 
+        //SE MANDA LA INFORMACIÓN AL TEXTVIEW CORRESPONDIENTE
         txtApellido.setText("Apellido: "+apellido);
         txtNombre.setText("Nombre: "+nombre);
         txtUsuario.setText("Usuario: "+usuario);
 
-        return itemView;
+        return itemView; //SE DEVUELVE LA VISTA
     }
 }

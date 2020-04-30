@@ -18,6 +18,7 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //SE CREAN LAS TABLAS USUARIOS Y ARCHIVOS
         db.execSQL("create table if not exists Usuarios(" +
                 "id integer PRIMARY KEY autoincrement, " +
                 "apellido text," +
@@ -34,6 +35,7 @@ public class DB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
+    //MÉTODO PARA AÑADIR UN REGISTRO
     public String addRegister(boolean v, String ap, String nom, String user, String pass) {
         String message = "";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -44,6 +46,7 @@ public class DB extends SQLiteOpenHelper {
         row.put("password", pass);
         db.beginTransaction();
         try {
+            //VALIDACIÓN DE EXISTENCIA DE USUARIO
             if (v) {
                 message = "El usuario " + user + " ya existe.";
             } else {
@@ -60,23 +63,20 @@ public class DB extends SQLiteOpenHelper {
         return message;
     }
 
-    public String updateRegister(boolean v, int id, String ap, String nom, String user, String pass) {
+    //MÉTODO PARA ACTUALIZAR UN REGISTRO
+    public String updateRegister(int id, String ap, String nom, String user, String pass) {
         String message = "";
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
             db.setTransactionSuccessful();
-            if (v) {
-                message = "El usuario " + user + " ya existe.";
-            } else {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("apellido", ap);
-                contentValues.put("nombre", nom);
-                contentValues.put("usuario", user);
-                contentValues.put("password", pass);
-                db.update("Usuarios", contentValues, "id='" + id + "'", null);
-                message = "¡El registro fue modificado con éxito!";
-            }
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("apellido", ap);
+            contentValues.put("nombre", nom);
+            contentValues.put("password", pass);
+            db.update("Usuarios", contentValues, "id=" + id, null);
+            message = "¡El registro fue modificado con éxito!";
+
         } catch (SQLException e) {
             message = "No se ha podido actualizar el registro.";
         } finally {
@@ -86,6 +86,7 @@ public class DB extends SQLiteOpenHelper {
         return message;
     }
 
+    //MÉTODO PARA ELIMINAR UN REGISTRO
     public String deleteRegister(int id) {
         String message = "";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -103,13 +104,14 @@ public class DB extends SQLiteOpenHelper {
         return message;
     }
 
+    //MÉTODO PARA VALIDAR SI EL USUARIO YA EXISTE O NO
     public boolean searchUser(String user) {
         boolean v = false;
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
             db.setTransactionSuccessful();
-            Cursor c = db.rawQuery("SELECT * FROM Usuarios WHERE usuario=" + user + "", null);
+            Cursor c = db.rawQuery("SELECT * FROM Usuarios WHERE usuario='" + user + "'", null);
             if (c != null) {
                 if (c.moveToFirst()) {
                     v = true;
@@ -127,6 +129,7 @@ public class DB extends SQLiteOpenHelper {
         return v;
     }
 
+    //MÉTODO PARA ENCONTRAR EL ID DEL USUARIO QUE INICIA SESIÓN
     public int findUser(String user, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -152,6 +155,7 @@ public class DB extends SQLiteOpenHelper {
         return 0;
     }
 
+    //LLENA LA LISTA DE USUARIOS
     public ArrayList<UserClass> selectList() {
         UserClass user;
         ArrayList<UserClass> list = new ArrayList<UserClass>();
@@ -166,6 +170,7 @@ public class DB extends SQLiteOpenHelper {
         return list;
     }
 
+    //MÉTODO PARA AÑADIR UN ARCHIVO
     public void addNote(int id, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("create table if not exists Archivos(" +
@@ -188,6 +193,7 @@ public class DB extends SQLiteOpenHelper {
         db.close();
     }
 
+    //LLENA LA LISTA DE ARCHIVOS SEGÚN EL USUARIO CORRESPONDIENTE
     public ArrayList<NotesClass> getNotes(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();

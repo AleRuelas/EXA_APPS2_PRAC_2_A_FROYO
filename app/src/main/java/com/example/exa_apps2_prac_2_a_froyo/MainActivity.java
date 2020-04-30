@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //SE DECLARAN INTENTOS PARA LANZAR LAS ACTIVIDADES CORRESPONDIENTES
         inUsers = new Intent(this, UsersActivity.class);
         inLogin = new Intent(this, LoginActivity.class);
     }
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(inLogin);
     }
     public void exitClick(View view){
+        //SE FINALIZA LA ACTIVIDAD PRINCIPAL
         System.exit(0);
     }
 

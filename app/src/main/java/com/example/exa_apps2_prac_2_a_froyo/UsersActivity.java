@@ -24,38 +24,48 @@ public class UsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
+        //SE VINCULA CADA ELEMENTO CON EL CORRESPONDIENTE EN EL LAYOUT ACTIVITY_USERS
         apellido = findViewById(R.id.edApellido);
         nombre = findViewById(R.id.edNombre);
         usuario = findViewById(R.id.edUsuario);
         password = findViewById(R.id.edPass);
         btnBorrar = findViewById(R.id.btnBorrar);
         btnGuardar = findViewById(R.id.btnGuardar);
+        //SE DESHABILITAN LOS BOTONES GUARDAR Y BORRAR
         btnBorrar.setEnabled(false);
         btnGuardar.setEnabled(false);
-        inList = new Intent(UsersActivity.this, UsersList.class);
+        inList = new Intent(UsersActivity.this, UsersList.class); //INTENTO PARA PASAR A LA CLASE USERSLIST CUANDO SEA LLAMADO
     }
 
+    //SE EJECUTA DESPUES DE VOLVER DE LA ACTIVIDAD USERSLIST LANZADA POR INTENTO INLIST
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //SE VERIFICA EL RESQUESTCODE
         if (requestCode == 1000) {
+            //SE VERIFICA RESULTCODE MANDADO DESDE USERSLIST
             if (resultCode == Activity.RESULT_OK) {
-
                 SharedPreferences preferences = this.getSharedPreferences("usuarios", Context.MODE_PRIVATE);
+                //SE OBTIENE EL ID DEL REGISTRO CORRESPONDIENTE
                 id = preferences.getInt("id",0);
+                //SE LLENAN LOS EDITTEXT CON LA INFORMACIÓN RECIBIDA DE LA CLASE USERSLIST
                 apellido.setText(preferences.getString("apellido", "error"));
                 nombre.setText(preferences.getString("nombre", "error"));
                 usuario.setText(preferences.getString("usuario", "error"));
                 password.setText(preferences.getString("password", "error"));
                 preferences.edit().clear().commit();
+
+                //SE HABILITAN/DESHABILITAN LOS COMPONENTES
                 btnBorrar.setEnabled(true);
                 btnGuardar.setEnabled(true);
+                usuario.setEnabled(false);
             }
         }
     }
 
+    //MÉTODO QUE INICIA LA ACTIVIDAD CORRESPONDIENTE AL INTENTO
     public void open(View view) {
-        startActivityForResult(inList, 1000);
+        startActivityForResult(inList, 1000);//MANDA EL RESQUESTCODE AL INICIAR LA ACTIVIDAD
     }
 
     public void add(View view) {
@@ -63,18 +73,27 @@ public class UsersActivity extends AppCompatActivity {
             Toast.makeText(this, "Inserta la información solicitada.", Toast.LENGTH_SHORT).show();
         } else {
             DB db = new DB(getApplicationContext(), null, null, 1);
+            //SE OBTIENE LA INFORMACIÓN DE CADA EDITTEXT
             String ap = apellido.getText().toString();
             String nom = nombre.getText().toString();
             String user = usuario.getText().toString();
             String pass = password.getText().toString();
+            //SE VERIFICA SI EL USUARIO YA EXISTE
             boolean v = db.searchUser(user);
+            //SE MANDA LLAMAR AL MÉTODO PARA AÑADIR EL REGISTRO
             String message = db.addRegister(v,ap, nom, user, pass);
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            apellido.setText("");
-            nombre.setText("");
-            usuario.setText("");
-            password.setText("");
         }
+
+        //SE VACIAN LOS CAMPOS
+        apellido.setText("");
+        nombre.setText("");
+        usuario.setText("");
+        password.setText("");
+        //SE HABILITAN/DESHABILITAN LOS COMPONENTES
+        btnBorrar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        usuario.setEnabled(true);
     }
 
     public void update(View view) {
@@ -82,20 +101,24 @@ public class UsersActivity extends AppCompatActivity {
             Toast.makeText(this, "Inserta la información solicitada.", Toast.LENGTH_SHORT).show();
         } else {
             DB db = new DB(getApplicationContext(), null, null, 1);
+            //SE OBTIENE LA INFORMACIÓN DE CADA EDITTEXT
             String ap = apellido.getText().toString();
             String nom = nombre.getText().toString();
             String user = usuario.getText().toString();
             String pass = password.getText().toString();
-            boolean v = db.searchUser(user);
-            String message = db.updateRegister(v,id,ap, nom, user, pass);
+            //SE MANDA LLAMAR AL MÉTODO PARA MODIFICAR EL REGISTRO
+            String message = db.updateRegister(id,ap, nom, user, pass);
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
+        //SE VACIAN LOS CAMPOS
         apellido.setText("");
         nombre.setText("");
         usuario.setText("");
         password.setText("");
+        //SE HABILITAN/DESHABILITAN LOS COMPONENTES
         btnBorrar.setEnabled(false);
         btnGuardar.setEnabled(false);
+        usuario.setEnabled(true);
     }
 
     public void delete(View view) {
@@ -103,14 +126,18 @@ public class UsersActivity extends AppCompatActivity {
             Toast.makeText(this, "Inserta la información solicitada.", Toast.LENGTH_SHORT).show();
         } else {
             DB db = new DB(getApplicationContext(), null, null, 1);
+            //SE MANDA LLAMAR AL MÉTODO PARA ELIMINAR EL REGISTRO
             String message = db.deleteRegister(id);
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
+        //SE VACIAN LOS CAMPOS
         apellido.setText("");
         nombre.setText("");
         usuario.setText("");
         password.setText("");
+        //SE HABILITAN/DESHABILITAN LOS COMPONENTES
         btnBorrar.setEnabled(false);
         btnGuardar.setEnabled(false);
+        usuario.setEnabled(true);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.exa_apps2_prac_2_a_froyo;
 
-
+//CLASE PARA USUARIOS
 import java.io.Serializable;
 
 public class UserClass implements Serializable {
